@@ -37,22 +37,23 @@ class Graph {
     }
 
     bfs(noInicial) {
-        let visitados = {};
+        let visitados = new Map();
 
         let fila = new Array();
-        visitados[noInicial] = true;
+        visitados.set(Number(noInicial), true);
         fila.unshift(noInicial);
 
         while (fila.length != 0) {
             const elementoDaFila = fila.pop();
             console.log(`Número: ${elementoDaFila}`);
-            const vizinhos = this.adjList.get(elementoDaFila);
-            for(let vizinho in vizinhos) {
-                if (!visitados[vizinho]) {
-                    visitados[vizinho] = true;
+            const vizinhos = this.adjList.get(Number(elementoDaFila));
+            for(let index in vizinhos) {
+                const vizinho = vizinhos[index];
+                if (visitados.get(Number(vizinho)) != true) {
+                    visitados.set(Number(vizinho), true);
                     fila.unshift(vizinho);
                 }
-            } 
+            }
         }
     }
 }
@@ -61,11 +62,19 @@ const meuGrafo = new Graph();
 meuGrafo.addVertex(0);
 meuGrafo.addVertex(1);
 meuGrafo.addVertex(2);
+meuGrafo.addVertex(3);
+meuGrafo.addVertex(4);
+meuGrafo.addVertex(5);
+meuGrafo.addVertex(6);
 
 meuGrafo.addEdge(0, 1);
-meuGrafo.addEdge(1, 2);
+meuGrafo.addEdge(0, 2);
+meuGrafo.addEdge(1, 3);
+meuGrafo.addEdge(1, 4);
+meuGrafo.addEdge(2, 5);
+meuGrafo.addEdge(2, 6);
 
-meuGrafo.printGraph();
+meuGrafo.bfs(0);
 
 
 
